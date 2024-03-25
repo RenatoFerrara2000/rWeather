@@ -11,6 +11,12 @@
 		527AACAC2BB1E22B00E75175 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACAB2BB1E22B00E75175 /* ContentView.swift */; };
 		527AACAE2BB1E22C00E75175 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 527AACAD2BB1E22C00E75175 /* Assets.xcassets */; };
 		527AACB12BB1E22C00E75175 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 527AACB02BB1E22C00E75175 /* Preview Assets.xcassets */; };
+		527AACB82BB1E24600E75175 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACB72BB1E24600E75175 /* WeatherModel.swift */; };
+		527AACBA2BB1E27900E75175 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACB92BB1E27900E75175 /* WeatherViewModel.swift */; };
+		527AACBC2BB1E29900E75175 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACBB2BB1E29900E75175 /* WeatherView.swift */; };
+		527AACBE2BB1E2B800E75175 /* Singleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACBD2BB1E2B800E75175 /* Singleton.swift */; };
+		527AACC22BB1E2E500E75175 /* LocatonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACC12BB1E2E500E75175 /* LocatonManager.swift */; };
+		527AACC42BB1E2F300E75175 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527AACC32BB1E2F300E75175 /* ApiManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +25,12 @@
 		527AACAB2BB1E22B00E75175 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		527AACAD2BB1E22C00E75175 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		527AACB02BB1E22C00E75175 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		527AACB72BB1E24600E75175 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		527AACB92BB1E27900E75175 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		527AACBB2BB1E29900E75175 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		527AACBD2BB1E2B800E75175 /* Singleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Singleton.swift; sourceTree = "<group>"; };
+		527AACC12BB1E2E500E75175 /* LocatonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocatonManager.swift; sourceTree = "<group>"; };
+		527AACC32BB1E2F300E75175 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,10 +63,16 @@
 		527AACA82BB1E22B00E75175 /* rWeather */ = {
 			isa = PBXGroup;
 			children = (
+				527AACBD2BB1E2B800E75175 /* Singleton.swift */,
+				527AACB92BB1E27900E75175 /* WeatherViewModel.swift */,
 				527AACA92BB1E22B00E75175 /* rWeatherApp.swift */,
 				527AACAB2BB1E22B00E75175 /* ContentView.swift */,
 				527AACAD2BB1E22C00E75175 /* Assets.xcassets */,
 				527AACAF2BB1E22C00E75175 /* Preview Content */,
+				527AACB72BB1E24600E75175 /* WeatherModel.swift */,
+				527AACBB2BB1E29900E75175 /* WeatherView.swift */,
+				527AACC12BB1E2E500E75175 /* LocatonManager.swift */,
+				527AACC32BB1E2F300E75175 /* ApiManager.swift */,
 			);
 			path = rWeather;
 			sourceTree = "<group>";
@@ -137,7 +155,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				527AACC42BB1E2F300E75175 /* ApiManager.swift in Sources */,
+				527AACBC2BB1E29900E75175 /* WeatherView.swift in Sources */,
+				527AACBE2BB1E2B800E75175 /* Singleton.swift in Sources */,
 				527AACAC2BB1E22B00E75175 /* ContentView.swift in Sources */,
+				527AACBA2BB1E27900E75175 /* WeatherViewModel.swift in Sources */,
+				527AACB82BB1E24600E75175 /* WeatherModel.swift in Sources */,
+				527AACC22BB1E2E500E75175 /* LocatonManager.swift in Sources */,
 				527AACAA2BB1E22B00E75175 /* rWeatherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
