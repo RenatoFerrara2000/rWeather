@@ -71,15 +71,15 @@ struct WeatherView: View {
                         
                     }
                 }
-            }.onAppear(){
-                
-                locationManager.manager.requestWhenInUseAuthorization()
-                locationManager.manager.startUpdatingLocation()
-                Task{
-                    //start a thread to get the data, off the main thread
-                    await fetchWeatherData()
-                }
             }
+            .task(){
+                
+                locationManager.manager.requestAlwaysAuthorization()
+                locationManager.manager.startUpdatingLocation()
+                        //start a thread to get the data, off the main thread
+                        await fetchWeatherData()
+            }
+
         }
     }
     //api manager singleton

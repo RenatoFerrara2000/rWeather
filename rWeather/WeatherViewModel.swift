@@ -105,13 +105,19 @@ class WeatherViewModel: ObservableObject {
                  //   print(time.prefix(13))
                 //  print(currentTime.prefix(13))
                     if(time.prefix(13) == currentTime?.prefix(13) ) {
-                        self.currentWeather = weather
+                        DispatchQueue.main.async{
+                            self.currentWeather = weather                                }
+                         
                        
                     }
                 }
     
+        DispatchQueue.main.async{
+            self.datiGiorno = data                            }
+         
+       
              //  print(data)
-        self.datiGiorno = data
+         
        
     }
     
