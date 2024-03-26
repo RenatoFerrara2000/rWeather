@@ -234,9 +234,9 @@ func getWeatherCodeDescription(code: Double) -> WeatherCode {
     case 1, 2, 3:
         return WeatherCode.init(codeNum: "cloud.sun", accessibleDesc: "Mainly clear, partly cloudy")
     case 45, 48:
-        return WeatherCode.init(codeNum: "cloud.drizzle", accessibleDesc: "Fog")
+        return WeatherCode.init(codeNum: "cloud.fog", accessibleDesc: "Fog")
     case 51, 53, 55:
-        return WeatherCode.init(codeNum: "cloud.fog", accessibleDesc: "drizzle")
+        return WeatherCode.init(codeNum: "cloud.drizzle", accessibleDesc: "drizzle")
     case 56, 57:
         return WeatherCode.init(codeNum: "cloud.sleet", accessibleDesc: "Freezing Drizzle")
     case 61, 63, 65:
