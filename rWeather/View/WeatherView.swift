@@ -10,7 +10,7 @@ import CoreLocationUI
 struct WeatherView: View {
   //  @AppStorage("FirstStart") var alertShouldBeShown = true
    @ObservedObject  var viewModel = WeatherViewModel()
-    @ObservedObject var singletonMagic = Singleton.shared
+   // @ObservedObject var singletonMagic = Singleton.shared
     var body: some View {
         ZStack{
             Color.blue.ignoresSafeArea()
@@ -19,7 +19,7 @@ struct WeatherView: View {
                 
                 VStack{
                     Text(viewModel.citta)
-                    Text(String(viewModel.tempNow)).font(.largeTitle)
+                    Text(String(viewModel.tempNow)).font(.largeTitle).accessibilityLabel("Temperature" + viewModel.tempNow)
                     Image(systemName: viewModel.currentWeather.weatherCode.codeNum).font(.largeTitle).accessibilityLabel(viewModel.currentWeather.weatherCode.accessibleDesc)
                     HStack{
                         Text("Precipitation:")
@@ -30,11 +30,12 @@ struct WeatherView: View {
                     
                 } .foregroundColor(.white)
                     .accessibilityElement(children: .combine)
-                    .onChange(of: Singleton.shared.authChanged) {
+
+                  /*  .onChange(of: Singleton.shared.authChanged) {
                         Task{
                              await viewModel.fetchData()
                         }
-                    }
+                    } */
                 
                 
                 

@@ -59,8 +59,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             /// app is authorized
             manager.startUpdatingLocation()
+             manager.requestLocation()
              Singleton.shared.authChanged = true
-             print("things changed, now authChanged is", Singleton.shared.authChanged)
+
+              print("things changed, now authChanged is", Singleton.shared.authChanged)
+             
               default:
             break
         }
@@ -76,8 +79,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         let geoCoder = CLGeocoder()
         let locationRev = CLLocation(latitude: self.location?.latitude ?? 41.902 , longitude: self.location?.longitude ?? 12.496)
         do {
-            print("Getting placemark")
-         let placemark = try await geoCoder.reverseGeocodeLocation(locationRev)
+          let placemark = try await geoCoder.reverseGeocodeLocation(locationRev)
             let city = placemark.first?.subAdministrativeArea ??  "Rome"
             print("[LocM] got city:", city)
             self.city = city

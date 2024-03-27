@@ -7,7 +7,7 @@
 
 import Foundation
 import Network
-
+import SwiftUI
   @MainActor
   class WeatherViewModel: ObservableObject {
     var weatherData: WeatherData
@@ -18,7 +18,7 @@ import Network
     @Published var currentTime: String
     @Published var  tempNow: String
     @Published var  dataFetched = false
-
+ 
     
     init() {
         self.weatherData = WeatherData()
@@ -28,19 +28,32 @@ import Network
         self.currentWeather = dataWeather()
         self.currentTime =  ""
         self.tempCity = "test"
-        Singleton.shared.getLocation()
-        Task{
-            await fetchData()
-        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: .locationUpdatedNotification, object: nil)
+ 
     }
+      //not sure of the need 
+      deinit {
+             NotificationCenter.default.removeObserver(self)
+         }
+      
+      @objc func handleNotification() {
+             print("Notification Received!")
+          Task{
+              await fetchData()
+              print("Notification REceived and fetching Data")
+          }
+         }
     
    
     
     func fetchData() async{
-         await fetchLocation()
-            print("[WVM] Fetched loc \n")
+        await fetchLocation()
         await fetchWeather()
-            print("[WVM] Fetched weather \n")
+        await fetchLocation()
         self.dataFetched = true
     }
     
@@ -61,6 +74,9 @@ import Network
             self.weatherData = weatData
             
             self.StructBuilder(weatherData: weatData)
+            print("Current time is: \n")
+            print(weatData.currentWeather?.time)
+            print("\n\n")
             
         }catch {
             // Handle error appropriately
@@ -73,18 +89,17 @@ import Network
         var data: dailyDataValues = dailyDataValues()
         _ = weatherData.hourly?.time?[0] ?? "t"
         
-        /* var currentTime: String {
+        var currentTime: String {
          let dateFormatter = DateFormatter()
          dateFormatter.dateFormat = "yyyy-MM-dd'T'HH"
          return dateFormatter.string(from: Date.now)
-         }*/
+         }
         
-        let  currentTime = self.weatherData.currentWeather?.time
-        ////
+         ////
         var counter: Int = 0
         for i in 0...24 {
             let time = weatherData.hourly?.time?[i] ?? "t"
-            if(time.prefix(13) == currentTime?.prefix(13)){
+            if(time.prefix(13) == currentTime.prefix(13)){
                 
                 counter = i
                 
@@ -111,7 +126,7 @@ import Network
             
             //   print(time.prefix(13))
             //  print(currentTime.prefix(13))
-            if(time.prefix(13) == currentTime?.prefix(13) ) {
+            if(time.prefix(13) == currentTime.prefix(13) ) {
                 self.currentWeather = weather
                 // print("current weather: ")
                 //   print(self.currentWeather.weatherCode.accessibleDesc)}

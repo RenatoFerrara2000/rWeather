@@ -8,7 +8,10 @@
 import Foundation
 import CoreLocation
 import CoreLocationUI
-import SwiftUI
+ //Notifification impleemt
+extension Notification.Name {
+    static let locationUpdatedNotification = Notification.Name("LocationUpdates")
+}
 
 class Singleton: ObservableObject {
      
@@ -21,12 +24,17 @@ class Singleton: ObservableObject {
     
     let apiManager =  ApiManager()
      
-    @Published var authChanged = false
+    var authChanged = false{
+        didSet{
+            NotificationCenter.default.post(name: .locationUpdatedNotification, object: nil)
+        }
+    }
+    
     
      func getLocation(){
          locationManager.requestLocation()
           Task{
-             let city =    await locationManager.getLocatonCityAsync()
+             let city =  await locationManager.getLocatonCityAsync()
          }
       }
     
