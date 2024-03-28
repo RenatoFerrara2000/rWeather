@@ -1,7 +1,6 @@
 ~ English
 
-Accesible Weather App
-This is an accessible weather app inspired by   Apple Weather.
+This is an accessible weather app inspired by Apple Weather.
 
 Features:
 
@@ -14,7 +13,6 @@ Features:
 
 ~ Italian
 
-App Meteo Accessibile 
 Questa è un'app meteo accessibile ispirata da Apple Meteo.
 
 Funzionalità:
