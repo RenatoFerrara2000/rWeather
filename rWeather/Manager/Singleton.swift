@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import CoreLocationUI
 
- //Notifification impleemt
+ //Notifification implement
 extension Notification.Name {
     static let locationUpdatedNotification = Notification.Name("LocationUpdates")
 }
@@ -42,7 +42,6 @@ class Singleton{
         }
     
     func fetchWeatherData() async throws -> Data? {
- 
         //Knowing location, get weather data from that location
         let data = await apiManager.fetch(lat: locationManager.location?.latitude ??  41.9028, long: locationManager.location?.longitude ?? 12.4964)
         

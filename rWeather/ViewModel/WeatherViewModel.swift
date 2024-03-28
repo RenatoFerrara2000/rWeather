@@ -11,7 +11,7 @@ import SwiftUI
   @MainActor
   class WeatherViewModel: ObservableObject {
     var weatherData: WeatherData
-      var tempCity: String
+    var tempCity: String
     @Published var city: String
     @Published var dailyData: dailyDataValues
     @Published var currentWeather: dataWeather
@@ -35,7 +35,8 @@ import SwiftUI
         NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: .locationUpdatedNotification, object: nil)
  
     }
-      //not sure of the need 
+      
+      //not sure of the need
       deinit {
              NotificationCenter.default.removeObserver(self)
          }
@@ -82,6 +83,7 @@ import SwiftUI
             print("[WVM] Error decoding weather data:", error)
         }
     }
+      
     //function to build up data so that it gets only the weather from now to 24hours in the future
     func StructBuilder(weatherData: WeatherData){
         
@@ -112,33 +114,21 @@ import SwiftUI
             //   print(0+counter)
             //    print(24+counter)
             let time = weatherData.hourly?.time?[j] ?? "t"
-            let weatherCode = Double((weatherData.hourly?.weatherCode?[j]) ?? 9)
-            let temperature = weatherData.hourly?.temperature2m?[j] ?? 9
+            let weatherCode = Double((weatherData.hourly?.weatherCode?[j]) ?? 99)
+            let temperature = formatTemp(temp: weatherData.hourly?.temperature2m?[j] ?? 99)
             let code = getWeatherCodeDescription(code: weatherCode)
-            let prec = weatherData.hourly?.precipitationProbability?[j] ?? 9
+            let prec = weatherData.hourly?.precipitationProbability?[j] ?? 99
             let weather = dataWeather(time: time, temperatura: temperature, weatherCode: code, precipitation: prec)
             data.datiTempo.append(weather)
             if(time.prefix(13) == currentTime.prefix(13) ) {
                 self.currentWeather = weather
-                // print("current weather: ")
-                //   print(self.currentWeather.weatherCode.accessibleDesc)}
+                self.tempNow = currentWeather.temperature
             }
                 
         }
         
              self.dailyData = data
-        
-        
-        let measurement = Measurement(value: currentWeather.temperature, unit: UnitTemperature.celsius)
-        
-        let measurementFormatter = MeasurementFormatter()
-        measurementFormatter.unitStyle = .short
-        measurementFormatter.numberFormatter.maximumFractionDigits = 0
-        measurementFormatter.unitOptions = .temperatureWithoutUnit
-        self.tempNow = measurementFormatter.string(from: measurement)
-        //  print(data)
-        
-        
+ 
     }
     
     

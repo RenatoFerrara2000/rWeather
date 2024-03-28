@@ -44,7 +44,7 @@ struct WeatherView: View {
                                     
                                     Text((day.time.prefix(13)).components(separatedBy: "T")[1])
                                     Image(systemName: day.weatherCode.codeNum).accessibilityLabel(day.weatherCode.accessibleDesc)
-                                    Text(viewModel.formatTemp(temp: day.temperature))
+                                    Text(day.temperature)
                                 } .foregroundColor(.white)
                                     .padding()
                                     .accessibilityElement(children: .combine)

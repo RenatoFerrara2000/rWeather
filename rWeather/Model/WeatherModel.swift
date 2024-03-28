@@ -195,18 +195,18 @@ struct dailyDataValues:Identifiable {
 struct dataWeather: Identifiable{
        let id = UUID()
        var time: String
-       var temperature: Double
+       var temperature: String
        var weatherCode: WeatherCode
     var precipitationProb: Int
     
     init(){
         self.time = ""
-        self.temperature = 0
+        self.temperature = ""
         self.weatherCode = WeatherCode(codeNum: "-1", accessibleDesc: "")
         self.precipitationProb = 0
     }
     
-    init(time: String, temperatura: Double, weatherCode: WeatherCode, precipitation: Int) {
+    init(time: String, temperatura: String, weatherCode: WeatherCode, precipitation: Int) {
             self.time = time
             self.temperature = temperatura
         self.weatherCode = weatherCode
