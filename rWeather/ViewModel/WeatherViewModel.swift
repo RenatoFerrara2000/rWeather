@@ -12,8 +12,8 @@ import SwiftUI
   class WeatherViewModel: ObservableObject {
     var weatherData: WeatherData
       var tempCity: String
-    @Published var citta: String
-    @Published var datiGiorno: dailyDataValues
+    @Published var city: String
+    @Published var dailyData: dailyDataValues
     @Published var currentWeather: dataWeather
     @Published var currentTime: String
     @Published var  tempNow: String
@@ -22,8 +22,8 @@ import SwiftUI
     
     init() {
         self.weatherData = WeatherData()
-        self.datiGiorno = dailyDataValues()
-        self.citta = ""
+        self.dailyData = dailyDataValues()
+        self.city = ""
         self.tempNow = ""
         self.currentWeather = dataWeather()
         self.currentTime =  ""
@@ -41,16 +41,15 @@ import SwiftUI
          }
       
       @objc func handleNotification() {
-             print("Notification Received!")
-          Task{
+           Task{
               await fetchData()
-              print("Notification REceived and fetching Data")
-          }
+           }
          }
     
    
     
     func fetchData() async{
+        
         await fetchLocation()
         await fetchWeather()
         await fetchLocation()
@@ -60,8 +59,8 @@ import SwiftUI
     //func to get city
      func fetchLocation() async{
          
-          self.citta =  await Singleton.shared.getCity()
-        print("[WVM] city is:" , self.citta.description , "\n\n")
+          self.city =  await Singleton.shared.getCity()
+        print("[WVM] city is:" , self.city.description , "\n\n")
     }
     
     //function to get data from open meteo
@@ -74,9 +73,9 @@ import SwiftUI
             self.weatherData = weatData
             
             self.StructBuilder(weatherData: weatData)
-            print("Current time is: \n")
-            print(weatData.currentWeather?.time)
-            print("\n\n")
+            
+            
+        
             
         }catch {
             // Handle error appropriately
@@ -89,13 +88,14 @@ import SwiftUI
         var data: dailyDataValues = dailyDataValues()
         _ = weatherData.hourly?.time?[0] ?? "t"
         
+        //Get device current data in right format
         var currentTime: String {
          let dateFormatter = DateFormatter()
          dateFormatter.dateFormat = "yyyy-MM-dd'T'HH"
          return dateFormatter.string(from: Date.now)
          }
         
-         ////
+         
         var counter: Int = 0
         for i in 0...24 {
             let time = weatherData.hourly?.time?[i] ?? "t"
@@ -107,25 +107,17 @@ import SwiftUI
             }
         }
         
-        
+        //Get the 24h window between the current time and 24h after
         for j in (0+counter)...(24+counter){
             //   print(0+counter)
             //    print(24+counter)
             let time = weatherData.hourly?.time?[j] ?? "t"
             let weatherCode = Double((weatherData.hourly?.weatherCode?[j]) ?? 9)
-            let temperatura = weatherData.hourly?.temperature2m?[j] ?? 9
+            let temperature = weatherData.hourly?.temperature2m?[j] ?? 9
             let code = getWeatherCodeDescription(code: weatherCode)
             let prec = weatherData.hourly?.precipitationProbability?[j] ?? 9
-            let weather = dataWeather(time: time, temperatura: temperatura, weatherCode: code, precipitation: prec)
+            let weather = dataWeather(time: time, temperatura: temperature, weatherCode: code, precipitation: prec)
             data.datiTempo.append(weather)
-            
-          //  print( "DataWeather code is", code)
-            
-            
-            
-            
-            //   print(time.prefix(13))
-            //  print(currentTime.prefix(13))
             if(time.prefix(13) == currentTime.prefix(13) ) {
                 self.currentWeather = weather
                 // print("current weather: ")
@@ -134,10 +126,10 @@ import SwiftUI
                 
         }
         
-             self.datiGiorno = data
+             self.dailyData = data
         
         
-        let measurement = Measurement(value: currentWeather.temperatura, unit: UnitTemperature.celsius)
+        let measurement = Measurement(value: currentWeather.temperature, unit: UnitTemperature.celsius)
         
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitStyle = .short

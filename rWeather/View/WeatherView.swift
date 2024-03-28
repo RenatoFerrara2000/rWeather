@@ -8,17 +8,16 @@ import SwiftUI
 import CoreLocation
 import CoreLocationUI
 struct WeatherView: View {
-  //  @AppStorage("FirstStart") var alertShouldBeShown = true
+    @AppStorage("FirstStart") var alertShouldBeShown = true
    @ObservedObject  var viewModel = WeatherViewModel()
-   // @ObservedObject var singletonMagic = Singleton.shared
-    var body: some View {
+     var body: some View {
         ZStack{
             Color.blue.ignoresSafeArea()
                 .opacity(0.6)
             VStack {
                 
                 VStack{
-                    Text(viewModel.citta)
+                    Text(viewModel.city)
                     Text(String(viewModel.tempNow)).font(.largeTitle).accessibilityLabel("Temperature" + viewModel.tempNow)
                     Image(systemName: viewModel.currentWeather.weatherCode.codeNum).font(.largeTitle).accessibilityLabel(viewModel.currentWeather.weatherCode.accessibleDesc)
                     HStack{
@@ -31,12 +30,7 @@ struct WeatherView: View {
                 } .foregroundColor(.white)
                     .accessibilityElement(children: .combine)
 
-                  /*  .onChange(of: Singleton.shared.authChanged) {
-                        Task{
-                             await viewModel.fetchData()
-                        }
-                    } */
-                
+                  
                 
                 
                 
@@ -45,12 +39,12 @@ struct WeatherView: View {
                         .frame(width:  360, height: 110)
                     ScrollView(.horizontal) {
                         LazyHStack{
-                            ForEach(viewModel.datiGiorno.datiTempo, id: \.id) { day in
+                            ForEach(viewModel.dailyData.datiTempo, id: \.id) { day in
                                 VStack {
                                     
                                     Text((day.time.prefix(13)).components(separatedBy: "T")[1])
                                     Image(systemName: day.weatherCode.codeNum).accessibilityLabel(day.weatherCode.accessibleDesc)
-                                    Text(viewModel.formatTemp(temp: day.temperatura))
+                                    Text(viewModel.formatTemp(temp: day.temperature))
                                 } .foregroundColor(.white)
                                     .padding()
                                     .accessibilityElement(children: .combine)

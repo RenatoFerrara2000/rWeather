@@ -12,6 +12,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     var city: String?
 
     var tempCity: String
+    @Published var authChanged = false
     
     
  
@@ -34,17 +35,25 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     //update current to location to the last location found
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
-           location = locations.last!.coordinate
+
+        let locationCll =  CLLocation(latitude: self.location?.latitude ?? 41.902 , longitude: self.location?.longitude ?? 12.496)
+        location = locations.last!.coordinate
+        let distance = locations.last!.distance(from: locationCll)
+        if(distance > 10000) //se la distanza dall'ultima posizione è maggiore di 10km
+        {
+            print("Damn boy, you went far ")
+            Singleton.shared.authChanged = true
         
-      }
+        }
+            
+       }
  
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         print("AUTH CHANGED \n")
          switch manager.authorizationStatus{
         case .notDetermined:
             manager.requestAlwaysAuthorization()
-            print("request sent \n")
-        case .restricted:
+         case .restricted:
             // show message
             print("Location restricted")
             location = CLLocationCoordinate2D(latitude:41.902, longitude: 12.496)
@@ -60,10 +69,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             /// app is authorized
             manager.startUpdatingLocation()
              manager.requestLocation()
-             Singleton.shared.authChanged = true
-
-              print("things changed, now authChanged is", Singleton.shared.authChanged)
-             
+ 
               default:
             break
         }
@@ -81,8 +87,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         do {
           let placemark = try await geoCoder.reverseGeocodeLocation(locationRev)
             let city = placemark.first?.subAdministrativeArea ??  "Rome"
-            print("[LocM] got city:", city)
-            self.city = city
+             self.city = city
             manager.startUpdatingLocation()
 
             return city
