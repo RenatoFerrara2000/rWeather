@@ -14,7 +14,7 @@ Features:
 
 5) MVVM Architecture: Follows the Model-View-ViewModel pattern for clean code structure.
 
-6)Singleton Management: Employs a Singleton class to manage geolocation and API calls efficiently.
+6)  Singleton Management: Employs a Singleton class to manage geolocation and API calls efficiently.
 
 ~ Italian
 
