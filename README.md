@@ -22,14 +22,14 @@ Questa è un'app meteo accessibile ispirata da Apple Meteo.
 
 Funzionalità:
 
-1)Servizi di Localizzazione: Utilizza Core Location per ottenere la tua posizione attuale e visualizzare il meteo della tua zona.
+1)  Servizi di Localizzazione: Utilizza Core Location per ottenere la tua posizione attuale e visualizzare il meteo della tua zona.
 
-2)Dati Meteo: Recupera le informazioni meteorologiche utilizzando l'API OpenWeatherMap.
+2)  Dati Meteo: Recupera le informazioni meteorologiche utilizzando l'API OpenWeatherMap.
 
-3)Prestazioni fluide: Sfrutta la concorrenza per garantire un'esperienza utente senza ritardi.
+3)  Prestazioni fluide: Sfrutta la concorrenza per garantire un'esperienza utente senza ritardi.
 
-4)Accessibilità: Sviluppata tenendo conto delle funzionalità di accessibilità.
+4)  Accessibilità: Sviluppata tenendo conto delle funzionalità di accessibilità.
 
-5)Architettura MVVM: Segue il modello Model-View-ViewModel per una struttura di codice pulita.
+5)  Architettura MVVM: Segue il modello Model-View-ViewModel per una struttura di codice pulita.
 
-6)Gestione Singleton: Utilizza una classe Singleton per gestire la geolocalizzazione e le chiamate API.
+6)  Gestione Singleton: Utilizza una classe Singleton per gestire la geolocalizzazione e le chiamate API.
