@@ -43,6 +43,8 @@ struct WeatherView: View {
                                 VStack {
                                     
                                     Text((day.time.prefix(13)).components(separatedBy: "T")[1])
+                                        .accessibilityLabel("\(day.time.components(separatedBy: "T")[1]) o'clock")
+
                                     Image(systemName: day.weatherCode.codeNum).accessibilityLabel(day.weatherCode.accessibleDesc)
                                     Text(viewModel.formatTemp(temp: day.temperature))
                                 } .foregroundColor(.white)
