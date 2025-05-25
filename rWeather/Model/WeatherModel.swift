@@ -202,7 +202,7 @@ struct dataWeather: Identifiable{
     init(){
         self.time = ""
         self.temperature = 0
-        self.weatherCode = WeatherCode(codeNum: "-1", accessibleDesc: "")
+        self.weatherCode = WeatherCode(codeNum: "sun.max", accessibleDesc: "")
         self.precipitationProb = 0
     }
     

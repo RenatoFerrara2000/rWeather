@@ -24,8 +24,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        manager.requestWhenInUseAuthorization()
  
-
     }
 
     func requestLocation() {
@@ -39,10 +39,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         let locationCll =  CLLocation(latitude: self.location?.latitude ?? 41.902 , longitude: self.location?.longitude ?? 12.496)
         location = locations.last!.coordinate
         let distance = locations.last!.distance(from: locationCll)
-        if(distance > 10000) //se la distanza dall'ultima posizione è maggiore di 10km
+        if(distance > 10000) // trigger a fetch if the distance is more than 10km
         {
-            print("Damn boy, you went far ")
-            Singleton.shared.authChanged = true
+             Singleton.shared.authChanged = true
         
         }
             
@@ -80,22 +79,31 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     
     
-    func getLocatonCityAsync() async -> String{
+    func getLocatonCityAsync() async -> String {
+        // Wait for location if not available
+        if location == nil {
+            manager.requestLocation()
+            // Wait a bit for location to be updated
+            try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+        }
+        
         manager.stopUpdatingLocation()
         let geoCoder = CLGeocoder()
-        let locationRev = CLLocation(latitude: self.location?.latitude ?? 41.902 , longitude: self.location?.longitude ?? 12.496)
+        let locationRev = CLLocation(
+            latitude: self.location?.latitude ?? 41.902,
+            longitude: self.location?.longitude ?? 12.496
+        )
+        
         do {
-          let placemark = try await geoCoder.reverseGeocodeLocation(locationRev)
-            let city = placemark.first?.subAdministrativeArea ??  "Rome"
-             self.city = city
+            let placemark = try await geoCoder.reverseGeocodeLocation(locationRev)
+            let city = placemark.first?.subAdministrativeArea ?? "Rome"
+            self.city = city
             manager.startUpdatingLocation()
-
             return city
-        }catch{
-            print("error geocoder")
+        } catch {
+            print("error geocoder: \(error)")
             manager.startUpdatingLocation()
             return "Rome"
-
         }
     }
  

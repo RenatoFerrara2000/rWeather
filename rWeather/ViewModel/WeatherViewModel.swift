@@ -17,7 +17,6 @@ import SwiftUI
     @Published var currentWeather: dataWeather
     @Published var currentTime: String
     @Published var  tempNow: String
-    @Published var  dataFetched = false
  
     
     init() {
@@ -48,13 +47,14 @@ import SwiftUI
     
    
     
-    func fetchData() async{
-        
-        await fetchLocation()
-        await fetchWeather()
-        await fetchLocation()
-        self.dataFetched = true
-    }
+      func fetchData() async {
+          print("=== Starting fetchData ===")
+          await fetchLocation()
+          print("City: \(city)")
+          print("Location coords: \(Singleton.shared.locationManager.location?.latitude ?? 0), \(Singleton.shared.locationManager.location?.longitude ?? 0)")
+          
+          await fetchWeather()
+       }
     
     //func to get city
      func fetchLocation() async{

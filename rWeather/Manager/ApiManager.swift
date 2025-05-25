@@ -17,7 +17,7 @@ class ApiManager{
         print(longitude)
         guard let url = URL(string: "https://api.open-meteo.com/v1/forecast?latitude=\(latitude)&longitude=\(longitude)&current=temperature_2m&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code")
          else {
-            print("Errore call api")
+            print("Error api call")
             return nil
         }
             do {

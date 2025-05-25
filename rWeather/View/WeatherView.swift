@@ -58,6 +58,9 @@ struct WeatherView: View {
                 }
             }   
 
+        }   .task {
+            // This will trigger the initial data fetch when the view appears
+            await viewModel.fetchData()
         }
     }
 }
