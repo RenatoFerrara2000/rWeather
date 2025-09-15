@@ -184,46 +184,19 @@ struct Daily: Codable {
 
 struct dailyDataValues:Identifiable {
     var id = UUID()
-    var datiTempo: [dataWeather]
-
-    init() {
-        self.datiTempo = []
-    }
-    
-
+    var datiTempo: [DataWeather] = []
 }
-struct dataWeather: Identifiable{
-       let id = UUID()
-       var time: String
-       var temperature: Double
-       var weatherCode: WeatherCode
-    var precipitationProb: Int
-    
-    init(){
-        self.time = ""
-        self.temperature = 0
-        self.weatherCode = WeatherCode(codeNum: "-1", accessibleDesc: "")
-        self.precipitationProb = 0
-    }
-    
-    init(time: String, temperatura: Double, weatherCode: WeatherCode, precipitation: Int) {
-            self.time = time
-            self.temperature = temperatura
-        self.weatherCode = weatherCode
-        self.precipitationProb = precipitation
-        }
-        
-    
+struct DataWeather: Identifiable {
+    let id = UUID()
+    var time: String = ""
+    var temperature: Double = 0
+    var weatherCode: WeatherCode = WeatherCode(codeNum: "-1", accessibleDesc: "")
+    var precipitationProb: Int = 0
 }
 
 struct WeatherCode{
     var codeNum: String
     var accessibleDesc: String
-    
-    init(codeNum: String, accessibleDesc: String) {
-        self.codeNum = codeNum
-        self.accessibleDesc = accessibleDesc
-    }
 }
 
 //function to get  Sf symbol and accessible description from weather code
@@ -261,29 +234,14 @@ func getWeatherCodeDescription(code: Double) -> WeatherCode {
 }
 
 //weather right now
-struct CurrentWeather: Decodable {
-    let time: String?
-    let interval: Double?
-     let   temperature2M: Double?
+    struct CurrentWeather: Decodable {
+        var time: String = ""
+        var interval: Double = 0
+        var temperature2M: Double = 0
 
-    enum CodingKeys: String, CodingKey {
-        case time        = "time"
-        case temperature2M = "temperature_2m"
-        case interval = "interval"
+        enum CodingKeys: String, CodingKey {
+            case time
+            case interval
+            case temperature2M = "temperature_2m"
+        }
     }
-    
-    init(from decoder: Decoder) throws {
-      let values = try decoder.container(keyedBy: CodingKeys.self)
-        time  = try values.decodeIfPresent(String.self  , forKey: .time  )
-        temperature2M = try values.decodeIfPresent(Double.self  , forKey: .temperature2M  )
-        interval = try values.decodeIfPresent(Double.self  , forKey: .interval  )
-
- 
-    }
-    
-    init(){
-        time = ""
-        temperature2M = 0
-        interval = 0
-    }
-}

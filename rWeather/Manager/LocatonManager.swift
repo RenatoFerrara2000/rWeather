@@ -41,7 +41,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         let distance = locations.last!.distance(from: locationCll)
         if(distance > 10000) //se la distanza dall'ultima posizione è maggiore di 10km
         {
-            print("Damn boy, you went far ")
+            print("You changed location")
             Singleton.shared.authChanged = true
         
         }
@@ -67,7 +67,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             //if no location given, set Rome as location
         case .authorizedWhenInUse, .authorizedAlways:
             /// app is authorized
-            manager.startUpdatingLocation()
+             manager.startUpdatingLocation()
              manager.requestLocation()
  
               default:

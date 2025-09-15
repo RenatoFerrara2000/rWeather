@@ -19,7 +19,7 @@ class Singleton{
     init() {
         
     }
-    static let shared = Singleton()
+    @MainActor static let shared = Singleton()
     
     let locationManager = LocationManager()
     

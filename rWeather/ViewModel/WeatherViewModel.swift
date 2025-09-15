@@ -9,15 +9,15 @@ import Foundation
 import Network
 import SwiftUI
   @MainActor
-  class WeatherViewModel: ObservableObject {
+ @Observable class WeatherViewModel {
     var weatherData: WeatherData
       var tempCity: String
-    @Published var city: String
-    @Published var dailyData: dailyDataValues
-    @Published var currentWeather: dataWeather
-    @Published var currentTime: String
-    @Published var  tempNow: String
-    @Published var  dataFetched = false
+   var city: String
+     var dailyData: dailyDataValues
+     var currentWeather: DataWeather
+     var currentTime: String
+     var  tempNow: String
+     var  dataFetched = false
  
     
     init() {
@@ -25,7 +25,7 @@ import SwiftUI
         self.dailyData = dailyDataValues()
         self.city = ""
         self.tempNow = ""
-        self.currentWeather = dataWeather()
+        self.currentWeather = DataWeather()
         self.currentTime =  ""
         self.tempCity = "test"
         
@@ -116,7 +116,7 @@ import SwiftUI
             let temperature = weatherData.hourly?.temperature2m?[j] ?? 9
             let code = getWeatherCodeDescription(code: weatherCode)
             let prec = weatherData.hourly?.precipitationProbability?[j] ?? 9
-            let weather = dataWeather(time: time, temperatura: temperature, weatherCode: code, precipitation: prec)
+            let weather = DataWeather(time: time, temperature: temperature, weatherCode: code, precipitationProb: prec)
             data.datiTempo.append(weather)
             if(time.prefix(13) == currentTime.prefix(13) ) {
                 self.currentWeather = weather

@@ -8,8 +8,8 @@ import SwiftUI
 import CoreLocation
 import CoreLocationUI
 struct WeatherView: View {
-    @AppStorage("FirstStart") var alertShouldBeShown = true
-   @ObservedObject  var viewModel = WeatherViewModel()
+@AppStorage("FirstStart") var alertShouldBeShown = true
+   @State  var viewModel = WeatherViewModel()
      var body: some View {
         ZStack{
             Color.blue.ignoresSafeArea()
@@ -58,6 +58,8 @@ struct WeatherView: View {
                 }
             }   
 
+        }.task {
+            await viewModel.fetchData()
         }
     }
 }
