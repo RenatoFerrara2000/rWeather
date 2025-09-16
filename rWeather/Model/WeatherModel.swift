@@ -182,10 +182,6 @@ struct Daily: Codable {
 
 }
 
-struct dailyDataValues:Identifiable {
-    var id = UUID()
-    var datiTempo: [DataWeather] = []
-}
 struct DataWeather: Identifiable {
     let id = UUID()
     var time: String = ""

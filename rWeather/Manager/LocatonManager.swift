@@ -13,8 +13,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     var tempCity: String
     @Published var authChanged = false
-    
-    
  
     //location initialized to rome in case user doesn't share location
 
@@ -34,7 +32,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
  
     
     //update current to location to the last location found
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+    @MainActor func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
 
         let locationCll =  CLLocation(latitude: self.location?.latitude ?? 41.902 , longitude: self.location?.longitude ?? 12.496)
         location = locations.last!.coordinate

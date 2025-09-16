@@ -38,7 +38,7 @@ class Singleton{
       }
     
     func getCity() async -> String{
-      return   await locationManager.getLocatonCityAsync()
+      return await locationManager.getLocatonCityAsync()
         }
     
     func fetchWeatherData() async throws -> Data? {

@@ -12,8 +12,8 @@ import SwiftUI
  @Observable class WeatherViewModel {
     var weatherData: WeatherData
       var tempCity: String
-   var city: String
-     var dailyData: dailyDataValues
+var city: String
+     var dailyData: [DataWeather] = []
      var currentWeather: DataWeather
      var currentTime: String
      var  tempNow: String
@@ -22,7 +22,7 @@ import SwiftUI
     
     init() {
         self.weatherData = WeatherData()
-        self.dailyData = dailyDataValues()
+        self.dailyData = []
         self.city = ""
         self.tempNow = ""
         self.currentWeather = DataWeather()
@@ -86,15 +86,15 @@ import SwiftUI
     //function to build up data so that it gets only the weather from now to 24hours in the future
     func StructBuilder(weatherData: WeatherData){
         
-        var data: dailyDataValues = dailyDataValues()
-        _ = weatherData.hourly?.time?[0] ?? "t"
-        
+ 
         //Get device current data in right format
         var currentTime: String {
          let dateFormatter = DateFormatter()
          dateFormatter.dateFormat = "yyyy-MM-dd'T'HH"
          return dateFormatter.string(from: Date.now)
          }
+        
+        var dayWeather: [DataWeather] = []
         
          
         var counter: Int = 0
@@ -118,7 +118,7 @@ import SwiftUI
             let code = getWeatherCodeDescription(code: weatherCode)
             let prec = weatherData.hourly?.precipitationProbability?[j] ?? 9
             let weather = DataWeather(time: time, temperature: temperature, weatherCode: code, precipitationProb: prec)
-            data.datiTempo.append(weather)
+            dayWeather.append(weather)
             if(time.prefix(13) == currentTime.prefix(13) ) {
                 self.currentWeather = weather
                 // print("current weather: ")
@@ -127,7 +127,7 @@ import SwiftUI
                 
         }
         
-             self.dailyData = data
+        self.dailyData = dayWeather
         
         
         let measurement = Measurement(value: currentWeather.temperature, unit: UnitTemperature.celsius)

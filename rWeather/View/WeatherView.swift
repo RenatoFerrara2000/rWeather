@@ -9,37 +9,34 @@ import CoreLocation
 import CoreLocationUI
 struct WeatherView: View {
 @AppStorage("FirstStart") var alertShouldBeShown = true
+    
    @State  var viewModel = WeatherViewModel()
      var body: some View {
         ZStack{
             Color.blue.ignoresSafeArea()
                 .opacity(0.6)
             VStack {
-                
                 VStack{
                     Text(viewModel.city)
+                    
                     Text(String(viewModel.tempNow)).font(.largeTitle).accessibilityLabel("Temperature" + viewModel.tempNow)
+                    
                     Image(systemName: viewModel.currentWeather.weatherCode.codeNum).font(.largeTitle).accessibilityLabel(viewModel.currentWeather.weatherCode.accessibleDesc)
+                    
                     HStack{
                         Text("Precipitation:")
                         Text(String(viewModel.currentWeather.precipitationProb) + "%").font(.subheadline)
-                        
-                        
                     }
                     
                 } .foregroundColor(.white)
                     .accessibilityElement(children: .combine)
-
-                  
-                
-                
                 
                 ZStack{
                     Color.blue.clipShape( RoundedRectangle(cornerRadius: 16))
                         .frame(width:  360, height: 110)
                     ScrollView(.horizontal) {
                         LazyHStack{
-                            ForEach(viewModel.dailyData.datiTempo, id: \.id) { day in
+                            ForEach(viewModel.dailyData, id: \.id) { day in
                                 VStack {
                                     
                                     Text((day.time.prefix(13)).components(separatedBy: "T")[1])
